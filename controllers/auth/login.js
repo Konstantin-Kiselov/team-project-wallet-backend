@@ -22,7 +22,7 @@ const login = async (req, res, next) => {
     if (!passwordCompare) {
       throw new Unauthorized("Email or password is wrong");
     }
-    const { _id } = user;
+    const { _id, name, balance } = user;
     const payload = {
       id: _id,
     };
@@ -32,6 +32,8 @@ const login = async (req, res, next) => {
       token,
       user: {
         email,
+        name,
+        balance,
       },
     });
   } catch (error) {

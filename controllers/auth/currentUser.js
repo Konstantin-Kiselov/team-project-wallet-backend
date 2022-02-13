@@ -1,9 +1,10 @@
 const currentUser = async (req, res, next) => {
-  const { email, name } = req.user;
+  const { email, name, balance } = req.user;
   res.json({
     user: {
       name,
       email,
+      balance,
     },
   });
 };
