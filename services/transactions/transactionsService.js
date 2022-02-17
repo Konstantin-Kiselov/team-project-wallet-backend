@@ -1,5 +1,5 @@
 const { BadRequest } = require("http-errors");
-const { User, Transaction } = require("../../models/");
+const { User, Transaction, TransactionCategory } = require("../../models/");
 
 const addTransaction = async (userId, balance, transaction) => {
   const { amount, income } = transaction;
@@ -34,7 +34,29 @@ const getUserTransactions = async (userId) => {
   return transactions;
 };
 
+const addTransactionCategory = async (userId, category) => {
+  const newTransactionCategory = await TransactionCategory.create({
+    ...category,
+    owner: userId,
+  });
+  return newTransactionCategory;
+};
+
+const getTransactionCategories = async (userId) => {
+  const categories = TransactionCategory.aggregate([
+    {
+      $match: {
+        owner: { $in: [userId, null] },
+      },
+    },
+  ]);
+
+  return categories;
+};
+
 module.exports = {
   addTransaction,
   getUserTransactions,
+  addTransactionCategory,
+  getTransactionCategories,
 };

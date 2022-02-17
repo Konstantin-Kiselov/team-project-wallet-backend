@@ -2,7 +2,7 @@ const {
   getUserTransactions,
 } = require("../../services/transactions/transactionsService");
 
-const getTransactions = async (req, res, next) => {
+const getTransactionsController = async (req, res, next) => {
   try {
     const { _id } = req.user;
 
@@ -13,4 +13,4 @@ const getTransactions = async (req, res, next) => {
   }
 };
 
-module.exports = getTransactions;
+module.exports = getTransactionsController;
