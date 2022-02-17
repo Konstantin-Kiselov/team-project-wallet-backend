@@ -4,7 +4,7 @@ const {
   addTransaction,
 } = require("../../services/transactions/transactionsService");
 
-const add = async (req, res, next) => {
+const addTransactionController = async (req, res, next) => {
   try {
     const { error } = joiTransactionSchema.validate(req.body);
 
@@ -13,12 +13,12 @@ const add = async (req, res, next) => {
     }
 
     const { _id, balance } = req.user;
-    const newTranasaction = await addTransaction(_id, balance, req.body);
+    const newTransaction = await addTransaction(_id, balance, req.body);
 
-    res.status(201).json(newTranasaction);
+    res.status(201).json(newTransaction);
   } catch (error) {
     next(error);
   }
 };
 
-module.exports = add;
+module.exports = addTransactionController;

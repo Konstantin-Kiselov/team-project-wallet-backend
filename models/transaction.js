@@ -8,7 +8,8 @@ const transactionSchema = Schema(
       required: [true, "Type is required"],
     },
     category: {
-      type: String,
+      type: Schema.Types.ObjectId,
+      ref: "transaction_category",
       required: [true, "Category is required"],
     },
     comment: {

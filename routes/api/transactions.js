@@ -1,12 +1,18 @@
 const express = require("express");
 
 const authenticate = require("../../middlewares/authenticate");
-const { add, getTransactions, getStats } = require("../../controllers/transactions");
+const {
+  addTransactionController,
+  getTransactionsController,
+  addTransactionCategoryController,
+  getTransactionCategoriesController,
+} = require("../../controllers/transactions");
 
 const router = express.Router();
 
-router.post("/", authenticate, add);
-router.get("/", authenticate, getTransactions);
-router.get("/:userId", authenticate, getStats);
+router.post("/", authenticate, addTransactionController);
+router.get("/", authenticate, getTransactionsController);
+router.post("/categories", authenticate, addTransactionCategoryController);
+router.get("/categories", authenticate, getTransactionCategoriesController);
 
 module.exports = router;
