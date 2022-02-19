@@ -11,6 +11,11 @@ const getStatsController = async (req, res, next) => {
   //     if (!query?.year || !query?.income) {
   //       return null;
   //     }
+
+  // const getSortedCategories = users => {
+//   return users.filter((skill, index, array) => array.indexOf(skill) === index)
+//   .sort();
+// };
   
   //     let statsArr = [];
   //     const transactionsByOwner = await Transaction.find({ owner: userId });
