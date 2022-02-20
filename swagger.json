@@ -592,14 +592,14 @@
                     "example": {"$gte": "new Date(2022, 01, 01)", "$lt": "new Date(2022, 02, 01)"}
                   }
                 }
-              },              
+              }
+          },
           "securitySchemes": {
             "Bearer": {
               "type": "http",
               "scheme": "bearer",
               "bearerFormat": "JWT"
             }
-          }
         }
     }
 }
