@@ -21,7 +21,8 @@
     "mongoose": "^6.1.4",
     "morgan": "^1.10.0",
     "query-string": "^7.1.1",
-    "swagger-ui-express": "^4.3.0"
+    "swagger-ui-express": "^4.3.0",
+    "url": "^0.11.0"
   },
   "devDependencies": {
     "eslint": "7.19.0",
