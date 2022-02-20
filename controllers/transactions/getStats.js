@@ -2,7 +2,8 @@ const { Transaction } = require("../../models");
 
 const getStatsController = async (req, res, next) => {
   try {
-    const { _id } = req.params;
+    // console.log(req.params);
+    // const { _id } = req.params;
 
   // const getStats = async ( _id, query) => {
   //   try {
@@ -14,9 +15,9 @@ const getStatsController = async (req, res, next) => {
 //   return users.filter((skill, index, array) => array.indexOf(skill) === index)
 //   .sort();
 // };
-
+      const {_id} = req.user
       let statsArr = [];
-      const transactionsByOwner = await Transaction.find(_id);
+      const transactionsByOwner = await Transaction.find({owner: _id});
       let total = 0;
       res.json(transactionsByOwner);
 
@@ -31,7 +32,7 @@ const getStatsController = async (req, res, next) => {
   
   //     const month = getMonthByDate(date);
 
-  //         if (category === query.category && month >= startDate && month <= endDate) {
+  //         if (category.id === query.category.id && month >= startDate && month <= endDate) {
   //           statsArr[month].total += amount;
   //           total += amount;
   //         }
