@@ -6,6 +6,7 @@ const {
   getTransactionsController,
   addTransactionCategoryController,
   getTransactionCategoriesController,
+  getStatsController,
 } = require("../../controllers/transactions");
 
 const router = express.Router();
@@ -14,5 +15,6 @@ router.post("/", authenticate, addTransactionController);
 router.get("/", authenticate, getTransactionsController);
 router.post("/categories", authenticate, addTransactionCategoryController);
 router.get("/categories", authenticate, getTransactionCategoriesController);
+router.get("/stats", getStatsController);
 
 module.exports = router;

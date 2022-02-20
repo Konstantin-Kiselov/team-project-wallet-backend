@@ -1,0 +1,605 @@
+{
+        "openapi": "3.0.1",
+        "info": {
+          "version": "2.0.0",
+          "title": "Swagger docs for wallet app",
+          "description": "Swagger doks for wallet app",
+          "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+          }
+        },
+        "consumes": ["application/json", "multipart/form-data"],
+        "produces": ["application/json"],
+        "servers": [{ "url": "http://localhost:3001" }, { "url": ""}],
+        "tags": [
+          {
+            "name": "Users",
+            "description": "Authorization endpoints"
+          },
+          {
+              "name": "Transactions",
+              "description": "Transactions endpoints"
+          }
+        ],
+        "paths": {
+          "/api/users/register": {
+            "post": {
+              "tags": ["Users"],
+              "summary": "User registration",
+              "parameters": [],
+              "requestBody": {
+                "description": "Registration's object",
+                "required": true,
+                "content": {
+                  "application/json": {
+                    "schema": {
+                      "$ref": "#/components/schemas/RegistrationRequest"
+                    }
+                  }
+                }
+              },
+              "responses": {
+                "201": {
+                  "description": "User successfully registered",
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "$ref": "#/components/schemas/RegistrationResponse"
+                      }
+                    }
+                  }
+                },
+                "400": {
+                  "description": "Bad request (invalid request body)",
+                  "content": {}
+                },
+                "409": {
+                  "description": "Provided email already exists",
+                  "content": {}
+                },
+                "500": {
+                    "description": "Server error",
+                    "content": {}
+                  }
+              }
+            }
+          },
+          "/api/users/login": {
+            "post": {
+              "tags": ["Users"],
+              "summary": "User login",
+              "parameters": [],
+              "requestBody": {
+                "description": "Login's object",
+                "required": true,
+                "content": {
+                  "application/json": {
+                    "schema": {
+                      "$ref": "#/components/schemas/LoginRequest"
+                    }
+                  }
+                }
+              },
+              "responses": {
+                "201": {
+                  "description": "Successfully loged in",
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "$ref": "#/components/schemas/LoginResponse"
+                      }
+                    }
+                  }
+                },
+                "400": {
+                  "description": "Bad request (invalid request body)",
+                  "content": {}
+                },
+                "500": {
+                  "description": "Server error",
+                  "content": {}
+                }
+              }
+            }
+          },
+          "/api/users/current": {
+            "get": {
+              "tags": ["Users"],
+              "summary": "Gets current user",
+              "parameters": [],
+              "security": [{ "Bearer": [] }],
+              "requestBody": {
+                "description": "User`s token",
+                "required": false,
+                "content": {}
+              },
+              "responses": {
+                "201": {
+                  "description": "User`s info",
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "$ref": "#/components/schemas/CurrentUserResponse"
+                      }
+                    }
+                  }
+                },
+                "401": {
+                  "description": "Unauthorized",
+                  "content": {}
+                },
+                "500": {
+                  "description": "Server error",
+                  "content": {}
+                }
+              }
+            }
+          },
+          "/api/users/logout": {
+            "get": {
+              "tags": ["Users"],
+              "summary": "Logs out current user",
+              "parameters": [],
+              "security": [{ "Bearer": [] }],
+              "requestBody": {
+                "description": "User`s token",
+                "required": false,
+                "content": {}
+              },
+              "responses": {
+                "204": {
+                  "description": "Loged out successfully",
+                  "content": {}
+                },
+                "401": {
+                  "description": "Unauthorized",
+                  "content": {}
+                },
+                "500": {
+                  "description": "Server error",
+                  "content": {}
+                }
+              }
+            }
+          },
+          "/api/transactions/": {
+            "post": {
+              "tags": ["Transactions"],
+              "summary": "Adds new transaction",
+              "parameters": [],
+              "security": [{ "Bearer": [] }],
+              "requestBody": {
+                "description": "Transactions object",
+                "required": true,
+                "content": {
+                  "application/json": {
+                    "schema": {
+                      "$ref": "#/components/schemas/TransactionsAddRequest"
+                    }
+                  }
+                }
+              },
+              "responses": {
+                "201": {
+                  "description": "Transaction added",
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "$ref": "#/components/schemas/TransactionAddResponse"
+                      }
+                    }
+                  }
+                },
+                "401": {
+                  "description": "Unauthorized",
+                  "content": {}
+                },
+                "500": {
+                  "description": "Server error",
+                  "content": {}
+                }
+              }
+            },
+            "get": {
+                "tags": ["Transactions"],
+                "summary": "Gets user`s transactions list",
+                "parameters": [],
+                "security": [{ "Bearer": [] }],
+                "requestBody": {
+                  "description": "Transactions objects array",
+                  "required": false,
+                  "content": {}
+                },
+                "responses": {
+                  "200": {
+                    "description": "Transaction added",
+                    "content": {
+                      "application/json": {
+                        "schema": {
+                          "example": [{
+                            "_id": "620eaa392fcc157b1cacc9bb",
+                            "income": false,
+                            "category": "6207d35e839aa4d8cb8c0b79",
+                            "comment": "За Январь",
+                            "amount": 2000,
+                            "total": 3000,
+                            "owner": "620d6fad0eb3615d8ef0a384",
+                            "createdAt": "2022-02-17T20:04:09.437Z"}, 
+                            {
+                            "_id": "62115b9dab779e2d69b7a93f",
+                            "income": false,
+                            "category": "6207d35e839aa4d8cb8c0b78",
+                            "comment": "bla bla bla",
+                            "amount": 1000,
+                            "total": 2000,
+                            "owner": "620d6fad0eb3615d8ef0a384",
+                            "createdAt": "2022-02-19T21:05:33.761Z"
+                            }]
+                        }
+                      }
+                    }
+                  },
+                  "401": {
+                    "description": "Unauthorized",
+                    "content": {}
+                  },
+                  "500": {
+                    "description": "Server error",
+                    "content": {}
+                  }
+                }
+              }
+          },
+          "/api/transactions/delete": {
+            "delete": {
+              "tags": ["Transactions"],
+              "summary": "Deletes transaction",
+              "parameters": [],
+              "security": [{ "Bearer": [] }],
+              "requestBody": {
+                "description": "Transactions _id",
+                "required": true,
+                "content": {
+                  "application/json": {
+                    "schema": {
+                      "example": {"_id": "620eab292fcc157b1cacc9cd"}
+                    }
+                  }
+                }
+              },
+              "responses": {
+                "201": {
+                  "description": "Transaction deleted",
+                  "content": {}
+                },
+                "401": {
+                  "description": "Unauthorized",
+                  "content": {}
+                },
+                "500": {
+                  "description": "Server error",
+                  "content": {}
+                }
+              }
+            }
+          },
+          "/api/transactions/categories": {
+            "get": {
+              "tags": ["Transactions"],
+              "summary": "Gets transaction categories list",
+              "parameters": [],
+              "security": [{ "Bearer": [] }],
+              "requestBody": {
+                "description": "Gets categories",
+                "required": false,
+                "content": {}
+              },
+              "responses": {
+                "200": {
+                  "description": "Avaliable transaction categories list",
+                  "content": {
+                    "application/json": {
+                        "schema": {
+                          "example": [
+                              { "_id": "621126934666123a75caf2fc",
+                                "name": "Основной",
+                                "income": false,
+                                "owner": null}, 
+                              {"_id": "621127194666123a75caf2fd",
+                                "name": "Еда",
+                                "income": false,
+                                "owner": null}]
+                        }
+                      }
+                  }
+                },
+                "401": {
+                  "description": "Unauthorized",
+                  "content": {}
+                },
+                "500": {
+                  "description": "Server error",
+                  "content": {}
+                }
+              }
+            },
+            "post": {
+                "tags": ["Transactions"],
+                "summary": "Adds new category",
+                "parameters": [],
+                "security": [{ "Bearer": [] }],
+                "requestBody": {
+                  "description": "Category name",
+                  "required": true,
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "example": {"name": "Aquapark", "income": false}
+                      }
+                    }
+                  }
+                },
+                "responses": {
+                  "201": {
+                    "description": "Transaction added",
+                    "content": {
+                      "application/json": {
+                        "schema": {
+                          "$ref": "#/components/schemas/CategoryAddResponse"
+                        }
+                      }
+                    }
+                  },
+                  "401": {
+                    "description": "Unauthorized",
+                    "content": {}
+                  },
+                  "500": {
+                    "description": "Server error",
+                    "content": {}
+                  }
+                }
+              }
+          },
+          "/api/transactions/stats": {
+            "get": {
+              "tags": ["Transactions"],
+              "summary": "Gets transaction statistics by period",
+              "parameters": [],
+              "security": [{ "Bearer": [] }],
+              "requestBody": {
+                "description": "Gets stats",
+                "required": false,
+                "content": {
+                    "application/json": {
+                        "schema": {
+                          "$ref" : "#/components/schemas/GetStatsRequest"
+                        }
+                      }
+                }
+              },
+              "responses": {
+                "200": {
+                  "description": "Avaliable transaction categories list",
+                  "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "example": {"_id": "620eaa392fcc157b1cacc9bb", "total": 20000}
+                            }  
+                      }
+                  }
+                },
+                "401": {
+                  "description": "Unauthorized",
+                  "content": {}
+                },
+                "500": {
+                  "description": "Server error",
+                  "content": {}
+                }
+              }
+            }
+          }
+        },
+        "components": {
+          "schemas": {
+            "RegistrationRequest": {
+              "type": "object",
+              "required": ["email", "password", "name"],
+              "properties": {
+                "email": {
+                  "type": "string",
+                  "description": "User's email",
+                  "format": "email"
+                },
+                "password": {
+                  "type": "string",
+                  "description": "User's password",
+                  "example": "qwerty123"
+                },
+                "name": {
+                  "type": "string",
+                  "description": "User's name",
+                  "example": "Mike Tyson"
+                }
+              }
+            },
+            "RegistrationResponse": {
+              "type": "object",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "description": "User's email",
+                    "format": "email"
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "User's name",
+                    "example": "Mike Tayson"
+                  }
+                }
+              },
+              "example": {"user": {
+                    "email": "mike@gmail.com", "name": "Mike Tyson"
+                } 
+              }
+            },
+            "LoginRequest": {
+                "type": "object",
+                "required": ["email", "password"],
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "description": "User's email",
+                    "format": "email"
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "User's password",
+                    "example": "qwerty123"
+                  }
+                }
+              },
+              "LoginResponse": {
+                "type": "object",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string",
+                      "description": "User`s token",
+                      "example": "eyJhbGciOiJIUzI1Ni..."
+                    },
+                    "user": {
+                        "email": {
+                            "type": "string",
+                            "description": "User's email",
+                            "format": "email"
+                        },
+                          "name": {
+                            "type": "string",
+                            "description": "User's name",
+                            "example": "Mike Tayson"
+                        },
+                          "balance": {
+                            "type": "integer",
+                            "description": "User`s actual balance",
+                            "example": 5000
+                        }
+                    }                    
+                  }
+                },
+                "example": {
+                    "token": "eyJhbGciOiJIUzI1Ni...",
+                    "user": {
+                      "email": "mike@gmail.com", 
+                      "name": "Mike Tyson",
+                      "balance": 5000
+                    } 
+                }
+              },
+              "CurrentUserResponse": {
+                "type": "object",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "user": {
+                        "name": {
+                            "type": "string",
+                            "description": "User's name",
+                            "example": "Mike Tayson"
+                          },
+                        "email": {
+                            "type": "string",
+                            "description": "User's email",
+                            "format": "email"
+                          },
+                        "balance": {
+                            "type": "integer",
+                            "description": "User`s actual balance",
+                            "format": "int32"
+                        }                          
+                    }
+                  }
+                },
+                "example": {"user": {
+                    "name": "Mike Tyson",
+                    "email": "mike@gmail.com",
+                    "balance": 5000                      
+                  } 
+                }
+              },              
+              "TransactionsAddRequest": {
+                "type": "object",
+                "required": ["income", "category", "amount"],
+                "properties": {
+                  "income": {
+                    "type": "boolean",
+                    "description": "Transactions type",
+                    "example": "true/false"
+                  },
+                  "category": {
+                    "type": "string",
+                    "description": "Categories id",
+                    "example": "620eae6f92012edbc43dea8f"
+                  },
+                  "amount": {
+                    "type": "integer",
+                    "description": "Transactions amount",
+                    "example": "3000"
+                  },
+                  "comment": {
+                    "type": "string",
+                    "description": "Transactions comment",
+                    "example": "За Январь"
+                  }
+                }
+              },              
+              "TransactionAddResponse": {
+                "type": "object",
+                "example": {
+                    "income": false,
+                    "category": "6207d35e839aa4d8cb8c0b78",
+                    "comment": "bla bla bla",
+                    "amount": 1000,
+                    "total": 2000,
+                    "owner": "620d6fad0eb3615d8ef0a384",
+                    "_id": "62115b9dab779e2d69b7a93f",
+                    "createdAt": "2022-02-19T21:05:33.761Z",
+                    "updatedAt": "2022-02-19T21:05:33.761Z"                      
+                }
+              },
+              "CategoryAddResponse": {
+                "type": "object",
+                "example": {
+                    "_id": "62115b9dab779e2d69b7a93f",
+                    "name": "Aquapark",
+                    "income": false,
+                    "owner": "620d6fad0eb3615d8ef0a384"                     
+                }
+              },
+              "GetStatsRequest": {
+                "type": "object",
+                "required": ["createdAt"],
+                "properties": {
+                  "createdAt": {
+                    "type": "object",
+                    "description": "Date period filter",
+                    "example": {"$gte": "new Date(2022, 01, 01)", "$lt": "new Date(2022, 02, 01)"}
+                  }
+                }
+              }
+          },
+          "securitySchemes": {
+            "Bearer": {
+              "type": "http",
+              "scheme": "bearer",
+              "bearerFormat": "JWT"
+            }
+        }
+    }
+}

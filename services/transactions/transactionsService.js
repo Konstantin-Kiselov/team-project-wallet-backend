@@ -58,5 +58,5 @@ module.exports = {
   addTransaction,
   getUserTransactions,
   addTransactionCategory,
-  getTransactionCategories,
+  getTransactionCategories
 };

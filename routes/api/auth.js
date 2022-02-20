@@ -13,4 +13,8 @@ router.get("/logout", authenticate, ctrl.logout);
 
 router.get("/current", authenticate, ctrl.currentUser);
 
+router.get("/google", ctrl.googleAuth);
+
+router.get("/google-redirect", ctrl.googleRedirect);
+
 module.exports = router;
