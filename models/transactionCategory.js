@@ -26,7 +26,7 @@ const joiTransactionCategorySchema = Joi.object({
 });
 
 const TransactionCategory = model(
-  "transaction_category",
+  "categories",
   transactionCategorySchema
 );
 

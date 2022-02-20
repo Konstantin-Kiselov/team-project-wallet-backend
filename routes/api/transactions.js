@@ -15,6 +15,6 @@ router.post("/", authenticate, addTransactionController);
 router.get("/", authenticate, getTransactionsController);
 router.post("/categories", authenticate, addTransactionCategoryController);
 router.get("/categories", authenticate, getTransactionCategoriesController);
-router.get("/stats", getStatsController);
+router.get("/stats",authenticate, getStatsController);
 
 module.exports = router;
