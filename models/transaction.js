@@ -8,8 +8,8 @@ const transactionSchema = Schema(
       required: [true, "Type is required"],
     },
     category: {
-      type: Object,
-      ref: "transaction_category",
+      type: Schema.Types.ObjectId,
+      ref: "category",
       required: [true, "Category is required"],
     },
     comment: {
@@ -33,7 +33,7 @@ const transactionSchema = Schema(
 
 const joiTransactionSchema = Joi.object({
   income: Joi.boolean().truthy(1, 0).required(),
-  category: Joi.object().required(),
+  category: Joi.string().required(),
   comment: Joi.string(),
   amount: Joi.number().required(),
 });
