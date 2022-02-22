@@ -72,7 +72,7 @@ const getTransactionsStatistics = async (userId, year, month) => {
       .filter((transaction) => transaction.category?.name === cat)
       .reduce((acc, item) => item.amount + acc, 0);
 
-    return { [cat]: totals };
+    return { name: cat, amount: totals };
   });
 
   const totalIncome = transactions
