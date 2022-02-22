@@ -21,15 +21,29 @@ const addTransaction = async (userId, balance, transaction) => {
 };
 
 const getUserTransactions = async (userId) => {
-  const transactions = await Transaction.find(
-    {
-      owner: userId,
-    },
-    "-updatedAt"
-  )
+  const transactions = await Transaction.find({
+    owner: userId,
+  })
     .populate({ path: "category", model: TransactionCategory })
     .sort({ createdAt: "desc" });
-  return transactions;
+
+  const options = { day: "numeric", month: "numeric", year: "2-digit" };
+  const response = transactions.map(
+    ({ _id, income, category, comment, amount, total, owner, createdAt }) => {
+      return {
+        _id,
+        income,
+        category,
+        comment,
+        amount,
+        total,
+        owner,
+        date: createdAt.toLocaleDateString("ru-RU", options),
+      };
+    }
+  );
+
+  return response;
 };
 
 const getTransactionsStatistics = async (userId, year, month) => {
