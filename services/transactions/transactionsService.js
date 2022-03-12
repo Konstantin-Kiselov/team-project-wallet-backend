@@ -52,7 +52,7 @@ const getTransactionsStatistics = async (userId, year, month) => {
       owner: userId,
       createdAt: {
         $gte: new Date(year, month),
-        $lt: new Date(year, month + 1),
+        $lt: new Date(year, Number(month) + 1),
       },
     },
     "-updatedAt"
