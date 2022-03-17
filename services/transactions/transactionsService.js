@@ -1,6 +1,9 @@
 const { BadRequest } = require("http-errors");
 const { User, Transaction, TransactionCategory } = require("../../models/");
 
+const MongoClient = require('mongodb').MongoClient;
+const assert = require('assert');
+
 const addTransaction = async (userId, balance, transaction) => {
   const { amount, income } = transaction;
   const newBalance = income ? balance + amount : balance - amount;
@@ -28,23 +31,41 @@ const getUserTransactions = async (userId) => {
     .sort({ createdAt: "desc" });
 
   const options = { day: "numeric", month: "numeric", year: "2-digit" };
-  const response = transactions.map(
-    ({ _id, income, category, comment, amount, total, owner, createdAt }) => {
-      return {
-        _id,
-        income,
-        category,
-        comment,
-        amount,
-        total,
-        owner,
-        date: createdAt.toLocaleDateString("ru-RU", options),
-      };
-    }
-  );
+
+  const filter = {
+    '_id': userId
+  };
+  
+  MongoClient.connect(
+    'mongodb+srv://Kirill:Y1JFioqkTigXn9xQ@cluster0.guodi.mongodb.net/db_wallet?authSource=admin&replicaSet=atlas-3ccrg1-shard-0&w=majority&readPreference=primary&appname=MongoDB+Compass&retryWrites=true&ssl=true',
+    { useNewUrlParser: true, useUnifiedTopology: true },
+    function(connectErr, client) {
+      assert.equal(null, connectErr);
+      const coll = client.db('db_wallet').collection('transactions');
+      coll.find(filter, (cmdErr, result) => {
+        assert.equal(null, cmdErr);
+      });
+      client.close();
+    });
+    
+  // const response = transactions.map(
+  //   ({ _id, income, category, comment, amount, total, owner, createdAt }) => {
+  //     return {
+  //       _id,
+  //       income,
+  //       category,
+  //       comment,
+  //       amount,
+  //       total,
+  //       owner,
+  //       date: createdAt.toLocaleDateString("ru-RU", options),
+  //     };
+  //   }
+  // );
 
   return response;
 };
+
 
 const getTransactionsStatistics = async (userId, year, month) => {
   const transactions = await Transaction.find(
@@ -60,12 +81,23 @@ const getTransactionsStatistics = async (userId, year, month) => {
     .populate({ path: "category", model: TransactionCategory })
     .sort({ createdAt: "desc" });
 
+
   const getExpenseCategories = (transactions) => {
-    return transactions
-      .filter((transaction) => !transaction.income)
-      .flatMap((transaction) => transaction.category?.name)
-      .filter((category, index, array) => array.indexOf(category) === index);
+    
+  const filter = {
+    'income': false
   };
+  
+  MongoClient.connect(
+    'mongodb+srv://Kirill:Y1JFioqkTigXn9xQ@cluster0.guodi.mongodb.net/db_wallet?authSource=admin&replicaSet=atlas-3ccrg1-shard-0&w=majority&readPreference=primary&appname=MongoDB+Compass&retryWrites=true&ssl=true',
+    { useNewUrlParser: true, useUnifiedTopology: true },
+    function(connectErr, client) {
+      assert.equal(null, connectErr);
+      const coll = client.db('db_wallet').collection('transactions').find(filter);
+      return coll;
+    });
+  };
+
 
   const stats = getExpenseCategories(transactions).map((cat) => {
     const totals = transactions
