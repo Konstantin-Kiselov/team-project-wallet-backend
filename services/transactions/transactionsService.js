@@ -41,8 +41,8 @@ const getUserTransactions = async (userId) => {
         date: { $dateToString: { date: "$createdAt", format: "%d.%m.%Y" } },
       },
     },
-    { $unset: ["createdAt", "updatedAt"] },
     { $sort: { createdAt: -1 } },
+    { $unset: ["createdAt", "updatedAt"] },
   ]);
 
   return transactions;
